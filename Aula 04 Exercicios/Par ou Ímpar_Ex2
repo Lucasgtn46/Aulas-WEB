@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checador de Números Par ou Ímpar</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-color: #dbe8f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .main-container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #0073e6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #4682b4;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .result-box {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            resize: none;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <h1>Descubra se é Par ou Ímpar</h1>
+
+        <label for="numeroInput">Digite um número:</label>
+        <input type="number" id="numeroInput" class="input-field" placeholder="Exemplo: 7">
+
+        <button onclick="verificar()" class="action-btn">Verificar</button>
+
+        <textarea id="resultado" class="result-box" readonly></textarea>
+    </div>
+
+    <script>
+        function verificar() {
+            // Obtém o valor do campo de entrada
+            let numero = document.getElementById('numeroInput').value;
+
+            // Valida se o campo não está vazio e contém um número
+            if (numero === '' || isNaN(numero)) {
+                alert('Por favor, insira um número válido.');
+                return;
+            }
+
+            // Converte para número inteiro
+            numero = parseInt(numero);
+
+            // Verifica se o número é par ou ímpar
+            let resultado = numero % 2 === 0 ? 
+                            `O número ${numero} é PAR.` : 
+                            `O número ${numero} é ÍMPAR.`;
+
+            // Exibe o resultado no campo de texto
+            document.getElementById('resultado').value = resultado;
+        }
+    </script>
+
+</body>
+</html>
