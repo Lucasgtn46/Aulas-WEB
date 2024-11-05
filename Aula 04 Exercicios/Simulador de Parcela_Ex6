@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Média e Conceito</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f8fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .table-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #0066cc;
+        }
+
+        th {
+            background-color: #0066cc;
+            color: #fff;
+        }
+
+        td {
+            background-color: #e6f2ff;
+        }
+
+        input[type="number"] {
+            width: 90%;
+            padding: 9px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0066cc;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+        }
+
+        .result-box {
+            width: 94%;
+            padding: 15px;
+            margin-top: 15px;
+            background-color: #e6f2ff;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="table-container">
+    <h2>Calculadora de Média e Conceito</h2> 
+
+        <table>
+            <tr>
+                <th>Nota 1</th>
+                <th>Nota 2</th>
+                <th>Nota 3</th>
+            </tr>
+            <tr>
+                <td><input type="number" id="nota1" placeholder="Primeira nota" required></td>
+                <td><input type="number" id="nota2" placeholder="Segunda nota" required></td>
+                <td><input type="number" id="nota3" placeholder="Terceira nota" required></td>
+            </tr>
+        </table>
+
+        <button onclick="calcularMedia()">Calcular Média e Conceito</button>
+
+        <div id="resultado" class="result-box"></div>
+    </div>
+
+    <script>
+        function calcularMedia() {
+            // Obtém as notas inseridas
+            var nota1 = parseFloat(document.getElementById('nota1').value);
+            var nota2 = parseFloat(document.getElementById('nota2').value);
+            var nota3 = parseFloat(document.getElementById('nota3').value);
+
+            // Valida as notas
+            if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || nota1 < 0 || nota2 < 0 || nota3 < 0) {
+                alert('Por favor, insira notas válidas!');
+                return;
+            }
+
+            // Calcula a média
+            var media = (nota1 + nota2 + nota3) / 3;
+
+            // Define o conceito com base na média
+            var conceito = '';
+            if (media >= 6) {
+                conceito = 'APROVADO';
+            } else if (media >= 3) {
+                conceito = 'EXAME';
+            } else {
+                conceito = 'REPROVADO';
+            }
+
+            // Exibe o resultado
+            document.getElementById('resultado').innerHTML = 
+                `Média: ${media.toFixed(2)}<br>Conceito: ${conceito}`;
+        }
+    </script>
+
+</body>
+</html>
