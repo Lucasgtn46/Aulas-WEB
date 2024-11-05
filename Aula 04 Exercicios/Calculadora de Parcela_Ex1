@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Parcelamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #1e90ff;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #1e90ff;
+            color: white;
+        }
+
+        td {
+            background-color: #f2f2f2;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4682b4;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Simulador de Parcelamento</h2>
+        
+        <!-- Formulário para input -->
+        <label for="valorTotal">Valor Total da Compra (R$):</label>
+        <input type="number" id="valorTotal" placeholder>
+        
+        <label for="numParcelas">Quantidade de Parcelas:</label>
+        <input type="number" id="numParcelas" placeholder>
+        
+        <button onclick="calcularParcelas()">Calcular</button>
+        
+        <!-- Exibindo o resultado -->
+        <div class="resultado" id="resultado"></div>
+
+        <!-- Tabela de Juros -->
+        <h3>Tabela de Juros</h3>
+        <table>
+            <tr>
+                <th>Parcelas</th>
+                <th>Juros (%)</th>
+            </tr>
+            <tr>
+                <td>1 parcela</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>2 a 3 parcelas</td>
+                <td>5%</td>
+            </tr>
+            <tr>
+                <td>4 a 6 parcelas</td>
+                <td>10%</td>
+            </tr>
+            <tr>
+                <td>7 a 12 parcelas</td>
+                <td>15%</td>
+            </tr>
+            <tr>
+                <td>Mais de 12 parcelas</td>
+                <td>20%</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function calcularParcelas() {
+            // Obtém os valores inseridos pelo usuário
+            var valorTotal = parseFloat(document.getElementById('valorTotal').value);
+            var numParcelas = parseInt(document.getElementById('numParcelas').value);
+
+            // Verifica se os valores são válidos
+            if (isNaN(valorTotal) || isNaN(numParcelas) || valorTotal <= 0 || numParcelas <= 0) {
+                alert("Por favor, insira valores válidos para o valor total e o número de parcelas.");
+                return;
+            }
+
+            var juros = 0;
+
+            // Aplica a tabela de juros conforme o número de parcelas
+            if (numParcelas === 1) {
+                juros = 0;
+            } else if (numParcelas >= 2 && numParcelas <= 3) {
+                juros = 5;
+            } else if (numParcelas >= 4 && numParcelas <= 6) {
+                juros = 10;
+            } else if (numParcelas >= 7 && numParcelas <= 12) {
+                juros = 15;
+            } else {
+                juros = 20;
+            }
+
+            // Calcula o valor da parcela
+            var valorParcela = (valorTotal * (1 + juros / 100)) / numParcelas;
+
+            // Exibe o valor da parcela
+            document.getElementById('resultado').innerHTML = `Valor de cada parcela: R$ ${valorParcela.toFixed(2)} (com juros de ${juros}%)`;
+        }
+    </script>
+
+</body>
+</html>
