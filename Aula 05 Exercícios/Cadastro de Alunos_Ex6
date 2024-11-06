@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cadastro de Alunos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-area {
+            width: 60%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-area input {
+            width: 97%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .form-area button {
+            width: 50%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .form-area button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .approved {
+            color: green;
+        }
+
+        .failed {
+            color: red;
+        }
+
+        .evaluation {
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Cadastro de Alunos</h2>
+
+    <div class="form-area">
+        <input type="text" id="nome" placeholder="Nome Completo">
+        <input type="text" id="rgm" placeholder="RGM do Aluno">
+        <input type="number" id="notaP" placeholder="Nota Parcial (máx 2)">
+        <input type="number" id="notaExer" placeholder="Nota de Exercícios (máx 1)">
+        <input type="number" id="notaProj" placeholder="Nota de Projeto (máx 2)">
+        <input type="number" id="notaReg" placeholder="Nota Regimental (máx 5)">
+        
+        <button onclick="cadastrarAluno()">Cadastrar</button>
+        <button onclick="exibirTabela()">Exibir Dados</button>
+    </div>
+
+    <table id="tabelaAlunos">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>RGM</th>
+                <th>Nota Parcial</th>
+                <th>Nota Exercícios</th>
+                <th>Nota Projeto</th>
+                <th>Nota Regimental</th>
+                <th>Nota Final</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="corpoTabela"></tbody>
+    </table>
+
+    <script>
+        // Arrays para armazenar os dados
+        let nomes = [];
+        let rgms = [];
+        let notasParcial = [];
+        let notasExer = [];
+        let notasProjeto = [];
+        let notasRegimental = [];
+
+        // Função para cadastrar os dados do aluno
+        function cadastrarAluno() {
+            let nome = document.getElementById('nome').value;
+            let rgm = document.getElementById('rgm').value;
+            let notaP = parseFloat(document.getElementById('notaP').value);
+            let notaExer = parseFloat(document.getElementById('notaExer').value);
+            let notaProj = parseFloat(document.getElementById('notaProj').value);
+            let notaReg = parseFloat(document.getElementById('notaReg').value);
+
+            // Verificação de campos obrigatórios
+            if (nome === '' || rgm === '' || isNaN(notaP) || isNaN(notaExer) || isNaN(notaProj) || isNaN(notaReg)) {
+                alert('Todos os campos devem ser preenchidos corretamente.');
+                return;
+            }
+
+            // Armazenando os dados no array
+            nomes.push(nome);
+            rgms.push(rgm);
+            notasParcial.push(notaP);
+            notasExer.push(notaExer);
+            notasProjeto.push(notaProj);
+            notasRegimental.push(notaReg);
+
+            // Limpar os campos após o cadastro
+            document.getElementById('nome').value = '';
+            document.getElementById('rgm').value = '';
+            document.getElementById('notaP').value = '';
+            document.getElementById('notaExer').value = '';
+            document.getElementById('notaProj').value = '';
+            document.getElementById('notaReg').value = '';
+        }
+
+        // Função para calcular a nota final do aluno
+        function calcularNotaFinal(notaP, notaExer, notaProj, notaReg) {
+            return notaP + notaExer + notaProj + notaReg;
+        }
+
+        // Função para determinar o status do aluno com base na nota final
+        function definirStatus(notaFinal) {
+            if (notaFinal >= 6) {
+                return 'Aprovado';
+            } else if (notaFinal >= 4) {
+                return 'Avaliação Final';
+            } else {
+                return 'Reprovado';
+            }
+        }
+
+        // Função para exibir os dados dos alunos na tabela
+        function exibirTabela() {
+            let corpoTabela = document.getElementById('corpoTabela');
+            corpoTabela.innerHTML = '';
+
+            for (let i = 0; i < nomes.length; i++) {
+                let notaFinal = calcularNotaFinal(notasParcial[i], notasExer[i], notasProjeto[i], notasRegimental[i]);
+                let status = definirStatus(notaFinal);
+
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${nomes[i]}</td>
+                    <td>${rgms[i]}</td>
+                    <td>${notasParcial[i]}</td>
+                    <td>${notasExer[i]}</td>
+                    <td>${notasProjeto[i]}</td>
+                    <td>${notasRegimental[i]}</td>
+                    <td>${notaFinal.toFixed(2)}</td>
+                    <td class="${status.toLowerCase().replace(' ', '-')}">${status}</td>
+                `;
+                corpoTabela.appendChild(tr);
+            }
+        }
+    </script>
+    
+</body>
+</html>
