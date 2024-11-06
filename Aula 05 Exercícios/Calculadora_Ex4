@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator input {
+            width: 94%;
+            padding: 20px;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: right;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+
+        button:active {
+            background-color: #ccc;
+        }
+
+        button.special {
+            background-color: #007bff;
+            color: white;
+        }
+
+        button.special:hover {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <input id="display" type="text" readonly />
+
+        <div class="buttons">
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('+')">+</button>
+
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('-')">-</button>
+
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('*')">*</button>
+
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="calculateResult()">=</button>
+            <button onclick="appendToDisplay('/')">/</button>
+
+            <button class="special" onclick="power()">^ (Potência)</button>
+            <button class="special" onclick="roundNumber()">Arredondar</button>
+            <button class="special" onclick="sqrtNumber()">Raiz Quadrada</button>
+        </div>
+    </div>
+
+    <script>
+
+function appendToDisplay(value) {
+            document.getElementById("display").value += value;
+        }
+
+
+        function clearDisplay() {
+            document.getElementById("display").value = "";
+        }
+
+
+        function calculateResult() {
+            try {
+                const expression = document.getElementById("display").value;
+                const result = eval(expression); 
+                document.getElementById("display").value = result;
+            } catch (e) {
+                alert("Erro na expressão!");
+            }
+        }
+
+
+        function power() {
+            const base = prompt("Digite a base do número:");
+            const exponent = prompt("Digite o expoente:");
+            if (base && exponent) {
+                const result = Math.pow(Number(base), Number(exponent));
+                document.getElementById("display").value = result;
+            }
+        }
+
+
+        function roundNumber() {
+            const number = prompt("Digite o número para arredondar:");
+            if (number) {
+                const result = Math.round(Number(number));
+                document.getElementById("display").value = result;
+            }
+        }
+
+
+        function sqrtNumber() {
+            const number = prompt("Digite o número para calcular a raiz quadrada:");
+            if (number) {
+                const result = Math.sqrt(Number(number));
+                document.getElementById("display").value = result;
+            }
+        }
+    </script>
+
+</body>
+</html>
