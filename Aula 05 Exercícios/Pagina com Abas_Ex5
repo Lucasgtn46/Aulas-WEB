@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página com Abas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+
+        .tabs {
+            display: flex;
+            cursor: pointer;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 10px 0;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .tabs div {
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .tabs div:hover {
+            background-color: #555;
+        }
+
+        .tabs .active {
+            background-color: #007bff;
+            color: white;
+        }
+
+
+        .tab-content {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+
+        #chronometer {
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Slide show */
+        #slideshow {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #slideshow img {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+
+        /* Estilos da tabuada */
+        #tabuada {
+            margin-top: 20px;
+        }
+
+        #tabuada div {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+
+    <div class="tabs">
+        <div id="tab-1" class="active" onclick="openTab(1)">Cronômetro</div>
+        <div id="tab-2" onclick="openTab(2)">Slide Show</div>
+        <div id="tab-3" onclick="openTab(3)">Tabuada</div>
+    </div>
+
+
+    <div id="content-1" class="tab-content active">
+        <!-- Cronômetro -->
+        <div id="chronometer">00:00:00</div>
+    </div>
+
+    <div id="content-2" class="tab-content">
+
+        <div id="slideshow">
+            <img id="slide-image" src="https://blog.easycarros.com/wp-content/uploads/2017/01/bloguer.jpg" alt="Imagem 1">
+            <div>
+                <button onclick="changeSlide('prev')">Anterior</button>
+                <button onclick="changeSlide('next')">Próximo</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="content-3" class="tab-content">
+
+        <div>
+            <input type="number" id="number" placeholder="Digite um número" />
+            <button onclick="generateTabuada()">Gerar Tabuada</button>
+        </div>
+        <div id="tabuada"></div>
+    </div>
+
+</div>
+
+<script>
+
+    let currentTab = 1;
+    let timer;
+    let seconds = 0;
+    let minutes = 0;
+    let hours = 0;
+    let currentImageIndex = 1;
+
+
+    function openTab(tabIndex) {
+
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tabs div').forEach(tab => tab.classList.remove('active'));
+
+
+        document.getElementById('content-' + tabIndex).classList.add('active');
+        document.getElementById('tab-' + tabIndex).classList.add('active');
+
+
+        if (tabIndex === 1 && !timer) {
+            startChronometer();
+        }
+    }
+
+
+    function startChronometer() {
+        timer = setInterval(() => {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+            }
+            if (minutes === 60) {
+                minutes = 0;
+                hours++;
+            }
+            document.getElementById('chronometer').textContent = 
+                (hours < 10 ? '0' : '') + hours + ':' + 
+                (minutes < 10 ? '0' : '') + minutes + ':' + 
+                (seconds < 10 ? '0' : '') + seconds;
+        }, 1000);
+    }
+
+
+    function changeSlide(direction) {
+        const images = [
+            'https://blog.easycarros.com/wp-content/uploads/2017/01/bloguer.jpg',
+            'https://img.freepik.com/fotos-gratis/colagem-de-fundo-de-programacao_23-2149901789.jpg?t=st=1730854843~exp=1730858443~hmac=4b2eb1ac3fea9c27bd5c6bb253343a4cfd6c17a224113e1be84e9f05f74cd8ce&w=826',
+            'https://media.licdn.com/dms/image/v2/D4D12AQHEPaQEvwHW9g/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1708519295796?e=2147483647&v=beta&t=iAus4AFHF1c8gIiX3isnLzgytu3PZghOVwJScXB176A',
+            'https://st2.depositphotos.com/1518767/12563/i/450/depositphotos_125635940-stock-photo-technology-graphic-background.jpg',
+            'https://www.impacta.com.br/blog/wp-content/uploads/2020/07/time-tecnologia.png'
+        ];
+
+        if (direction === 'next') {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+        } else {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        }
+
+        document.getElementById('slide-image').src = images[currentImageIndex];
+    }
+
+
+    function generateTabuada() {
+        const number = document.getElementById('number').value;
+        const tabuadaDiv = document.getElementById('tabuada');
+        tabuadaDiv.innerHTML = '';
+
+        if (number) {
+            for (let i = 1; i <= 10; i++) {
+                const result = number * i;
+                tabuadaDiv.innerHTML += `<div>${number} x ${i} = ${result}</div>`;
+            }
+        } else {
+            tabuadaDiv.innerHTML = 'Por favor, digite um número.';
+        }
+    }
+
+
+    openTab(1);
+</script>
+
+</body>
+</html>
