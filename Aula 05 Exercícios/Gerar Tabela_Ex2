@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar Tabela</title>
+    <style>
+        table {
+            width: 30%;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+        td {
+            text-align: center;
+            padding: 10px;
+            font-size: 30px;
+        }
+
+        td:nth-child(even) {
+            background-color: #4CAF50; 
+            color: #000000;
+        }
+
+        td:nth-child(odd) {
+            background-color: #FFEB3B; 
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">Tabela Gerada Dinamicamente</h1>
+
+    <script>
+        function gerarTabela() {
+
+            var numLinhas = parseInt(prompt("Digite o número de linhas da tabela:"));
+            var numColunas = parseInt(prompt("Digite o número de colunas da tabela:"));
+
+            // Verifica se os valores são válidos
+            if (isNaN(numLinhas) || isNaN(numColunas) || numLinhas <= 0 || numColunas <= 0) {
+                alert("Por favor, insira valores válidos para as linhas e colunas.");
+                return;
+            }
+
+
+            var tabela = "<table>";
+
+
+            for (var i = 0; i < numLinhas; i++) {
+                tabela += "<tr>";  
+        
+
+                for (var j = 0; j < numColunas; j++) {
+
+                    tabela += "<td>" + (i + 1) + "," + (j + 1) + "</td>";
+                }
+
+                tabela += "</tr>";  
+                
+            }
+
+            tabela += "</table>"; 
+
+
+            document.body.innerHTML += tabela;
+        }
+
+
+        gerarTabela();
+    </script>
+
+</body>
+</html>
