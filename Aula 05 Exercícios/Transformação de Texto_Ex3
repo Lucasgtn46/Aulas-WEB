@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformação de Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            width: 96%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            width: 48%;
+            padding: 10px;
+            margin: 1%;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e6f7ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 4px;
+            font-size: 18px;
+            white-space: pre-wrap; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Transformação de Texto</h2>
+        
+
+        <input type="text" id="inputText" placeholder="Digite uma palavra ou frase">
+        <div>
+            <button onclick="converterMaiuscula()">Maiúscula</button>
+            <button onclick="separarPalavras()">Separar</button>
+        </div>
+        
+
+        <div id="resultado" class="output"></div>
+    </div>
+
+    <script>
+
+function converterMaiuscula() {
+            var texto = document.getElementById('inputText').value;
+            document.querySelector("#resultado").innerHTML = texto.toUpperCase();
+        }
+
+
+        function separarPalavras() {
+            var texto = document.getElementById('inputText').value;
+            var palavras = texto.split(' ');
+            var resultado = palavras.join('\n');
+            document.querySelector("#resultado").innerHTML = resultado;
+        }
+    </script>
+
+</body>
+</html>
