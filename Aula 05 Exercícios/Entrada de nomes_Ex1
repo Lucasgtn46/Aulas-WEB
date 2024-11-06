@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrada de Nomes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            background-color: #CCCCCC;
+        }
+
+        th, td {
+            border: 1px solid #666666;
+            padding: 10px;
+            text-align: left;
+            color: #CCCCCC;
+        }
+
+        th {
+            background-color: #000033;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        td {
+            background-color: #000066;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h2>Lista de Nomes</h2>
+        <table id="nomeTabela">
+            <thead>
+                <tr>
+                    <th>Índice</th>
+                    <th>Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Linhas de nomes serão inseridas aqui -->
+            </tbody>
+        </table>
+
+        <button onclick="iniciarEntrada()">Inserir Nomes</button>
+    </div>
+
+    <script>
+        // Função para iniciar a entrada de nomes
+        function iniciarEntrada() {
+            var nomes = [];
+            var index = 1;
+
+            while (true) {
+                // Solicita ao usuário para inserir um nome
+                var nome = prompt("Digite um nome (ou cancele para finalizar):");
+
+                // Se o usuário cancelar a entrada, encerra o loop
+                if (nome === null) {
+                    break;
+                }
+
+                // Adiciona o nome à lista
+                nomes.push({ index: index, nome: nome });
+
+                // Incrementa o índice para o próximo nome
+                index++;
+            }
+
+            // Atualiza a tabela com os nomes inseridos
+            atualizarTabela(nomes);
+        }
+
+        // Função para atualizar a tabela com os nomes e seus índices
+        function atualizarTabela(nomes) {
+            var tabelaBody = document.getElementById("nomeTabela").getElementsByTagName("tbody")[0];
+
+            // Limpa a tabela antes de inserir os novos dados
+            tabelaBody.innerHTML = "";
+
+            // Preenche a tabela com os nomes e índices
+            nomes.forEach(function(item) {
+                var novaLinha = tabelaBody.insertRow();
+                var celulaIndice = novaLinha.insertCell(0);
+                var celulaNome = novaLinha.insertCell(1);
+
+                // Preenche as células com os dados
+                celulaIndice.textContent = item.index;
+                celulaNome.textContent = item.nome;
+            });
+        }
+    </script>
+
+</body>
+</html>
